@@ -6,13 +6,21 @@
  */
 
 /* Global styles. {{{1 */
+/*@font-face{
+    font-family : "avenirBlack";
+    src : url('Avenir-Black.ttf');
+}
+@font-face{
+    font-family : "avenirRoman";
+    src : url('Avenir-Roman.ttf');
+}*/
 
 body {
-  margin: 1em;
+  margin: 2em;
   font-size: 2em;
   line-height: 1.75em;
   color: black;
-  background: white;
+  background: #333333;
 }
 
 .spinner {
@@ -55,13 +63,31 @@ body {
   border-radius: 0.25em;
 }
 
+.green-bg {
+  background-color: #49A116;
+  color: white;
+}
+
+.blue-bg {
+  background-color: #A3CFE6;
+  color: #333333
+}
+
+.block {
+  border-radius: 2mm;
+  border-style: solid;
+  border-color: black;
+  border-width: 1mm;
+}
+
 /* Now playing interface. {{{1 */
 
 #now-playing {
-  text-align: center;
+  text-align: left;
 }
 
 /* Track metadata. {{{2 */
+
 
 #now-playing a:link,
 #now-playing a:visited {
@@ -106,12 +132,13 @@ body {
   height: 2em;
 }
 
+
 .dimmed-image-button {
-  opacity: 0.5;
+  color: #333333;
 }
 
 .hover-image-button:hover {
-  opacity: 1;
+  color: white;
 }
 
 #playback-controls, #volume-control, #misc-controls {

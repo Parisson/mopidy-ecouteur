@@ -210,21 +210,44 @@ MopidyClient.prototype.render_current_track = function(current_track) {
   this.show('now-playing');
   // Render the "$track from $album by $artist" text.
   var now_playing = [];
-  now_playing.push(sprintf('<span class="track-name">%s</span><br>', this.link_to_spotify(current_track)));
-  if (current_track.album && current_track.album.name != 'Unknown') {
-    now_playing.push('<span class="from-album">from</span>');
-    now_playing.push(sprintf('<span class="album-name">%s</span><br>', this.link_to_spotify(current_track.album)));
-  }
+  now_playing.push('<h3>Auteur</h3>')
   if (current_track.artists) {
     var artists = [];
     for (var i = 0; i < current_track.artists.length; i++) {
       var artist_name = this.link_to_spotify(current_track.artists[i]);
-      artists.push(sprintf('<span class="artist-name">%s</span>', artist_name));
+      artists.push(sprintf('<h2 class="artist-name">%s</h2>', artist_name));
     }
-    now_playing.push('<span class="by-artist">by</span>');
+    now_playing.push('<span class="by-artist"></span>');
     now_playing.push(sprintf('%s', artists.join(', ')));
   }
+  now_playing.push('<h3>Titre de l&apos;&oelig;uvre</h3>')
+  now_playing.push(sprintf('<h2 class="track-name">%s</h2><br>', this.link_to_spotify(current_track)));
+
   $('#track-info').html(now_playing.join('\n'));
+
+
+  // Render extra track info
+  var now_playing_extra = [];
+  console.log(current_track)
+  if (current_track.date) {
+    now_playing_extra.push(sprintf('<span class="album-year">Année : %s</span><br>', current_track.date.slice(0,4)));
+  }
+  if (current_track.length) {
+    now_playing_extra.push(sprintf('<span class="album-length">Durée de l&apos;&oelig;uvre : %s</span><br>', msToTime(current_track.length)));
+  }
+  if (current_track.album && current_track.album.name != 'Unknown') {
+    now_playing_extra.push(sprintf('<p class="album-name">%s</p><br>', current_track.album.name));
+  }
+  $('#track-extra-info').html(now_playing_extra.join('\n'));
+
+  // Render extra track info -> Comments
+  var now_playing_comment = [];
+  if (current_track.comment) {
+    now_playing_comment.push(sprintf('<p class="trck-comment">%s</p><br>',
+                             current_track.comment));
+  }
+  $('#track-comment').html(now_playing_comment.join('\n'));
+
   this.update_play_state();
 }
 
@@ -458,3 +481,19 @@ function html_encode(string) {
                  .replace(/</g, '&lt;')
                  .replace(/>/g, '&gt;');
 };
+
+// milliseconds to time in javascript
+function msToTime(s) {
+  var ms = s % 1000;
+  s = (s - ms) / 1000;
+  var secs = s % 60;
+  s = (s - secs) / 60;
+  var mins = s % 60;
+  var hrs = (s - mins) / 60;
+
+  if (hrs) {
+    return hrs + ':' + mins + ':' + secs;
+  } else {
+    return mins + ':' + secs;
+  };
+}

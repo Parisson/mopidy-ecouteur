@@ -15,12 +15,15 @@
     <!-- jQuery from the Google CDN. -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
     <!-- Bootstrap CSS & JS from the Bootstrap CDN. -->
-    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" rel="stylesheet">
-    <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <!-- Font Awesome" -->
+    <link rel="stylesheet" href="styles/font-awesome.min.css" />
     <!-- The Mopidy client behavior and styling. -->
     <link href="styles/client.css" rel="stylesheet">
     <script src="behavior/client.js"></script>
     <script src="behavior/sprintf.js"></script>
+
   </head>
   <body>
     <!-- Server selection interface. -->
@@ -50,36 +53,60 @@
     </div>
     <!-- Now playing interface. -->
     <div id="now-playing" class="hidden-by-default">
-      <div id="track-info"></div>
+      <div class="container-fluid" style="background-color: #000000; color: #49A116;">
+        <h1> L’ÉCOUTEUR </h1>
+        <div class="row">
+          <div class="col-md-7 block blue-bg">
+            <div id="track-info"></div>
+          </div>
+          <div class="col-md-5 block green-bg">
+            <div id="track-extra-info"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="progress" style="height: 100px; background-color: black">
+                <div class="progress-bar block green-bg" role="progressbar" style="width:60%; background-color: #49A116;">
+                  Elapsed
+                </div>
+                <div class="progress-bar block blue-bg" role="progressbar" style="width:40%; background-color: #A3CFE6; color: #333333">
+                  Remaining
+                </div>
+            </div>
+       </div>
+      <div class="row">
+        <div class="col-md-12 blue-bg block">
+          <div id="track-comment"></div>
+        </div>
+      </div>
+<div class="row">
+  <div class="col-md-12 blue-bg block">
+  <div id="controls">
+  <p id="playback-controls">
+          <span id="previous-track-button" class="dimmed-image-button hover-image-button">
+           <i class="fa fa-caret-left fa-5x"></i>
+         </span>
+         <span  id="next-track-button" class="dimmed-image-button hover-image-button">
+           <i class="fa fa-caret-right fa-5x"></i>
+         </span>
+        </p>
+</div>
+</div>
+</div>
+    </div>
+
       <div id="controls">
-        <p id="playback-controls">
+<!--        <p id="playback-controls">
           <img src="images/previous.png" id="previous-track-button" class="dimmed-image-button hover-image-button">
           <img src="images/play.png" id="play-button" class="dimmed-image-button hover-image-button">
           <img src="images/pause.png" id="pause-button" class="dimmed-image-button hover-image-button">
           <img src="images/stop.png" id="stop-button" class="dimmed-image-button hover-image-button">
           <img src="images/next.png" id="next-track-button" class="dimmed-image-button hover-image-button">
         </p>
-        <p id="volume-control">
-          <span class="step" onclick="mopidy_client.set_volume(0)"></span>
-          <span class="step" onclick="mopidy_client.set_volume(20)"></span>
-          <span class="step" onclick="mopidy_client.set_volume(40)"></span>
-          <span class="step" onclick="mopidy_client.set_volume(60)"></span>
-          <span class="step" onclick="mopidy_client.set_volume(80)"></span>
-          <span class="step" onclick="mopidy_client.set_volume(100)"></span>
-          <br clear="both">
-        </p>
+      -->
         <p id="misc-controls">
           <button class="btn btn-large" id="select-playlist-button">
             <img src="images/eject.png">
             Select playlist ..
-          </button>
-          <button class="btn btn-large" id="toggle-shuffle-button">
-            <img src="images/shuffle.png">
-            <span>Enable shuffle</span>
-          </button>
-          <button class="btn btn-large" id="toggle-repeat-button">
-            <img src="images/repeat.png">
-            <span>Enable repeat</span>
           </button>
         </p>
       </div>

@@ -53,8 +53,6 @@ MopidyClient.prototype.install_event_handlers = function() {
   $('#stop-button').click(function() { client.stop(); });
   $('#previous-track-button').click(function() { client.previous_track(); });
   $('#next-track-button').click(function() { client.next_track(); });
-  $('#toggle-shuffle-button').click(function() { client.toggle_shuffle(); });
-  $('#toggle-repeat-button').click(function() { client.toggle_repeat(); });
   $('#select-playlist-button').click(function() { client.select_playlist(); });
   $('#cancel-playlist-selection-button').click(function() { client.show_now_playing(); });
 };
@@ -210,30 +208,35 @@ MopidyClient.prototype.render_current_track = function(current_track) {
   this.show('now-playing');
   // Render the "$track from $album by $artist" text.
   var now_playing = [];
-  now_playing.push('<h3>Auteur</h3>')
+  now_playing.push('<h3>Auteur :</h3>')
   if (current_track.artists) {
     var artists = [];
     for (var i = 0; i < current_track.artists.length; i++) {
-      var artist_name = this.link_to_spotify(current_track.artists[i]);
+      var artist_name = (current_track.artists[i]).name;
       artists.push(sprintf('<h2 class="artist-name">%s</h2>', artist_name));
     }
     now_playing.push('<span class="by-artist"></span>');
     now_playing.push(sprintf('%s', artists.join(', ')));
   }
-  now_playing.push('<h3>Titre de l&apos;&oelig;uvre</h3>')
-  now_playing.push(sprintf('<h2 class="track-name">%s</h2><br>', this.link_to_spotify(current_track)));
+  now_playing.push('<h3>Titre de l&apos;&oelig;uvre :</h3>')
+  now_playing.push(sprintf('<h2 class="track-name">%s</h2><br>', current_track.name));
 
   $('#track-info').html(now_playing.join('\n'));
 
 
   // Render extra track info
   var now_playing_extra = [];
-  console.log(current_track)
+
   if (current_track.date) {
     now_playing_extra.push(sprintf('<span class="album-year">Année : %s</span><br>', current_track.date.slice(0,4)));
   }
+
   if (current_track.length) {
-    now_playing_extra.push(sprintf('<span class="album-length">Durée de l&apos;&oelig;uvre : %s</span><br>', msToTime(current_track.length)));
+    var track_length = current_track.length / 1000;
+    $('#time-elapsed').attr('aria-valuemax', track_length);
+    $('#time-left').attr('aria-valuemax', track_length);
+
+    now_playing_extra.push(sprintf('<span class="album-length">Durée de l&apos;&oelig;uvre : %s</span><br>', timeFromSeconds(track_length)));
   }
   if (current_track.album && current_track.album.name != 'Unknown') {
     now_playing_extra.push(sprintf('<p class="album-name">%s</p><br>', current_track.album.name));
@@ -267,16 +270,8 @@ MopidyClient.prototype.update_play_state = function() {
       $('#stop-button').hide();
     }
   });
-  // Update the shuffle toggle button.
-  this.call('core.tracklist.get_random', function(enabled) {
-    var label = $('#toggle-shuffle-button span');
-    label.text(enabled ? "Disable shuffle" : "Enable shuffle");
-  });
-  // Update the repeat toggle button.
-  this.call('core.tracklist.get_repeat', function(enabled) {
-    var label = $('#toggle-repeat-button span');
-    label.text(enabled ? "Disable repeat" : "Enable repeat");
-  });
+
+
   // Update the volume level.
   this.call('core.playback.get_volume', function(volume_level) {
     var markers = $('#volume-control span');
@@ -286,6 +281,29 @@ MopidyClient.prototype.update_play_state = function() {
         $(markers[i]).addClass('filled');
       else
         $(markers[i]).removeClass('filled');
+  });
+  // Update the time position.
+  //var length = this.call('core.playback.get_current_track');
+  //console.log(length)
+  this.call('core.playback.get_time_position', function(time_position) {
+    var bar_elapsed = $('#time-elapsed');
+    var bar_remain = $('#time-remain');
+    var track_length = bar_elapsed.attr('aria-valuemax');
+    var track_position = time_position / 1000;
+    var width = ( track_position / track_length) * 100;
+    var track_remain = track_length - track_position;
+
+    var elapsed_time = timeFromSeconds(track_position);
+    var remain_time = timeFromSeconds(track_remain);
+
+
+    bar_elapsed.css('width', width + '%');
+    bar_remain.css('width', (100-width) + '%');
+    bar_elapsed.attr('aria-valuenow', track_position);
+    bar_remain.attr('aria-valuenow', track_remain);
+    $('#label-bar-left').html('<h3>' + elapsed_time + '</h3>');
+    $('#label-bar-right').html('<h3>' + remain_time + '</h3>');
+
   });
 };
 
@@ -324,29 +342,7 @@ MopidyClient.prototype.next_track = function() {
   });
 };
 
-// MopidyClient.toggle_shuffle() {{{2
 
-MopidyClient.prototype.toggle_shuffle = function() {
-  this.call('core.tracklist.get_random', function(enabled) {
-    this.call({
-      method: 'core.tracklist.set_random',
-      params: [!enabled]
-    });
-    this.refresh_gui();
-  });
-};
-
-// MopidyClient.toggle_repeat() {{{2
-
-MopidyClient.prototype.toggle_repeat = function() {
-  this.call('core.tracklist.get_repeat', function(enabled) {
-    this.call({
-      method: 'core.tracklist.set_repeat',
-      params: [!enabled]
-    });
-    this.refresh_gui();
-  });
-};
 
 // MopidyClient.set_volume() {{{2
 
@@ -365,19 +361,7 @@ MopidyClient.prototype.show = function(element_id) {
   document.location.href = sprintf('#%s', element_id);
 };
 
-// MopidyClient.link_to_spotify() - Generate hyper links to the Spotify web player. {{{2
 
-MopidyClient.prototype.link_to_spotify = function (object) {
-  var result = html_encode(object.name);
-  if (object.uri) {
-    var tokens = object.uri.split(':');
-    if (tokens.length == 3 && tokens[0] == 'spotify') {
-      var kind = tokens[1], identifier = tokens[2];
-      result = sprintf('<a href="https://play.spotify.com/%s/%s">%s</a>', kind, identifier, result);
-    }
-  }
-  return result;
-};
 
 // MopidyClient.call() - Call Mopidy API methods using JSON RPC. {{{2
 
@@ -481,6 +465,15 @@ function html_encode(string) {
                  .replace(/</g, '&lt;')
                  .replace(/>/g, '&gt;');
 };
+
+//convert time to human readable format
+function timeFromSeconds(length) {
+    var d = Number(length);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return ((h > 0 ? h + "h" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + "'" : "0'") + (s < 10 ? "0" : "") + s);
+}
 
 // milliseconds to time in javascript
 function msToTime(s) {

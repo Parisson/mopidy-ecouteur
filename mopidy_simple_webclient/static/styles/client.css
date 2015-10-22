@@ -150,6 +150,13 @@ body {
   height: 2em;
 }
 
+#previous-track-button {
+  text-align: left;
+}
+
+#next-track-button {
+  text-align: right;
+}
 
 .dimmed-image-button {
   color: #333333;

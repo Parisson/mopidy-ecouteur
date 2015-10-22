@@ -251,8 +251,43 @@ MopidyClient.prototype.render_current_track = function(current_track) {
   }
   $('#track-comment').html(now_playing_comment.join('\n'));
 
+
+  this.update_next_prev_tracks();
   this.update_play_state();
-}
+};
+
+MopidyClient.prototype.update_next_prev_tracks = function () {
+  this.call('core.playback.get_current_tl_track', function(tl_track) {
+      // Update next track
+      this.call({
+        method: 'core.tracklist.next_track',
+        params: [tl_track],
+        done: function(next_track) {
+
+          $('#label-next').html(short_track_info(next_track.track));
+          }
+      });
+      // Update previous track
+      this.call({
+        method: 'core.tracklist.previous_track',
+        params: [tl_track],
+        done: function(prev_track) {
+
+          $('#label-previous').html(short_track_info(prev_track.track));
+        }
+      });
+    });
+};
+
+// short format for trac info
+function short_track_info(track) {
+  var artist = track.artists[0].name;
+  var title = track.name;
+  var year = track.date.slice(0,4);
+
+  return artist + ' ' + title + ' ('  +year +')';
+};
+
 
 // MopidyClient.update_play_state() {{{2
 
@@ -282,10 +317,7 @@ MopidyClient.prototype.update_play_state = function() {
       else
         $(markers[i]).removeClass('filled');
   });
-  // Update next track
-  //this.call('core.tracklist.next_track', function(next_track) {
-  //  console.log('next track', next_track);
-  //});
+
   // Update the time position.
   //var length = this.call('core.playback.get_current_track');
   //console.log(length)

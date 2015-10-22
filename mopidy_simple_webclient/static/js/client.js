@@ -133,7 +133,7 @@ MopidyClient.prototype.refresh_gui = function() {
     clearTimeout(gui_refresh_interval);
   gui_refresh_interval = setTimeout(function() {
     mopidy_client.refresh_gui();
-  }, 10000);
+  }, 1000);
 };
 
 // MopidyClient.select_playlist() - Ask the user which play list to load. {{{2
@@ -282,6 +282,10 @@ MopidyClient.prototype.update_play_state = function() {
       else
         $(markers[i]).removeClass('filled');
   });
+  // Update next track
+  //this.call('core.tracklist.next_track', function(next_track) {
+  //  console.log('next track', next_track);
+  //});
   // Update the time position.
   //var length = this.call('core.playback.get_current_track');
   //console.log(length)

@@ -82,8 +82,8 @@ body {
 
 
 .progress-bar {
-    min-width: 10%;
-    max-width: 90%;
+    min-width: 8%;
+    max-width: 92%;
     /*margin-right: 1mm;
     margin-left: 1mm;*/
 }
@@ -166,7 +166,7 @@ body {
   color: white;
 }
 
-#playback-controls, #volume-control, #misc-controls {
+#playback-controls, #misc-controls {
   margin: 1em auto;
 }
 
@@ -174,25 +174,7 @@ body {
   margin: 0.25em;
 }
 
-/* Volume control. {{{2 */
 
-#volume-control {
-  width: 16em;
-}
-
-#volume-control .step {
-  display: block;
-  margin: 0.3em;
-  width: 2em;
-  height: 2em;
-  float: left;
-  background-color: #eee;
-  border-radius: 1em;
-}
-
-#volume-control .filled {
-  background-color: LightSteelBlue;
-}
 
 /* Mobile tweaks. {{{1 */
 

@@ -6,14 +6,15 @@
  */
 
 /* Global styles. {{{1 */
-/*@font-face{
-    font-family : "avenirBlack";
+@font-face{
+    font-family : "Avenir Black";
     src : url('Avenir-Black.ttf');
 }
+
 @font-face{
-    font-family : "avenirRoman";
-    src : url('Avenir-Roman.ttf');
-}*/
+    font-family : "Avenir Roman";
+    src : url(' Avenir-Roman.ttf');
+}
 
 body {
   margin: 2em;
@@ -21,6 +22,24 @@ body {
   line-height: 1.75em;
   color: black;
   background: #333333;
+  font-family: 'Avenir Roman', sans-serif;
+}
+
+
+.row {
+    margin: 4px;
+}
+
+h1 {
+    font-size: 250%;
+    font-weight: bold;
+    font-family: 'Avenir Black', sans-serif;
+    padding-left: 5px;
+}
+
+
+h2 {
+    margin-top: 0px;
 }
 
 .spinner {
@@ -80,7 +99,6 @@ body {
   border-width: 1mm;
 }
 
-
 .progress-bar {
     min-width: 8%;
     max-width: 92%;
@@ -119,13 +137,25 @@ body {
 }
 
 #now-playing .track-name {
-  /*font-size: 1.3em;
-  font-weight: bold;*/
+  font-size: 2em;
+  font-weight: bold;
+  font-family: 'Avenir Black', sans-serif;
 }
 
-#now-playing .album-name,
+#now-playing .trck-comment {
+  padding-top: 0.5em;
+  line-height: 1.2em;
+  font-size: 1.1em;
+}
+
+#now-playing .album-name {
+    line-height: 1.1em;
+}
+
 #now-playing .artist-name {
-  /*font-size: 1.2em;*/
+  font-size: 2em;
+  font-weight: bold;
+  font-family: 'Avenir Black', sans-serif;
 }
 
 #now-playing .from-album,

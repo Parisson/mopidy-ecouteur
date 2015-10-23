@@ -23,6 +23,8 @@ mopidy.on("event:playbackStateChanged", function(data) {
     };
     }
 });
+
+// Ne marche pas a priori !!!!! ????
 $('#previous-track-button').click(function() {  mopidy.playback.previous(); });
 $('#next-track-button').click(function() { mopidy.playback.next(); });
 
@@ -40,15 +42,18 @@ function update_track_info (tl_track) {
 };
 
 function set_next_track(next_track) {
-  $('#label-next').html(short_track_info(next_track.track));
+  if (next_track !== null) {
+    $('#label-next').html(short_track_info(next_track.track));
+  };
 };
 
 function set_previous_track(previous_track) {
-  $('#label-previous').html(short_track_info(previous_track.track));
+  if (previous_track !== null) {
+    $('#label-previous').html(short_track_info(previous_track.track));
+  };
 };
 
 function update_time_position() {
-  
   mopidy.playback.getTimePosition().then(set_time_position)
         .catch(console.error.bind(console)) // Handle errors here
     .done();                            // ...or they'll be thrown here;

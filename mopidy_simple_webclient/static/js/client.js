@@ -1,9 +1,79 @@
-/* Simple Mopidy web client.
+/* Simple Mopidy web client for the Ecouteur project
  *
- * Author: Peter Odding <peter@peterodding.com>
- * Last Change: June 8, 2015
- * URL: https://github.com/xolox/mopidy-simple-webclient
- */
+ * Author:Thomas Fillon <thomas@parisson.com>
+  */
+
+
+var mopidy = new Mopidy();             // Connect to server
+mopidy.on(console.log.bind(console));  // Log all events
+mopidy.on("state:online", get_current_track);
+mopidy.on("event:trackPlaybackStarted", function(data) {
+  //console.log('data', data);
+  update_track_info (data.tl_track);
+  }
+);
+mopidy.on("event:playbackStateChanged", function(data) {
+    if (data.new_state === 'playing') {
+      updatePositionTimer = setInterval(function() {
+        update_time_position();
+      }, 1000);
+    } else {
+      if (typeof updatePositionTimer !== 'undefined') {
+      clearInterval(updatePositionTimer);
+    };
+    }
+});
+$('#previous-track-button').click(function() {  mopidy.playback.previous(); });
+$('#next-track-button').click(function() { mopidy.playback.next(); });
+
+
+
+function get_current_track() {
+  mopidy.playback.getCurrentTlTrack().then(update_track_info);
+};
+
+function update_track_info (tl_track) {
+  render_curent_track(tl_track.track);
+  mopidy.tracklist.nextTrack(tl_track).then(set_next_track);
+  mopidy.tracklist.previousTrack(tl_track).then(set_previous_track);
+  //getTimePosition();
+};
+
+function set_next_track(next_track) {
+  $('#label-next').html(short_track_info(next_track.track));
+};
+
+function set_previous_track(previous_track) {
+  $('#label-previous').html(short_track_info(previous_track.track));
+};
+
+function update_time_position() {
+  
+  mopidy.playback.getTimePosition().then(set_time_position)
+        .catch(console.error.bind(console)) // Handle errors here
+    .done();                            // ...or they'll be thrown here;
+};
+
+function set_time_position(time_position) {
+  var bar_elapsed = $('#time-elapsed');
+  var bar_remain = $('#time-remain');
+  var track_length = bar_elapsed.attr('aria-valuemax');
+  var track_position = time_position / 1000;
+  var width = ( track_position / track_length) * 100;
+  var track_remain = track_length - track_position;
+
+  var elapsed_time = timeFromSeconds(track_position);
+  var remain_time = timeFromSeconds(track_remain);
+
+
+  bar_elapsed.css('width', width + '%');
+  bar_remain.css('width', (100-width) + '%');
+  bar_elapsed.attr('aria-valuenow', track_position);
+  bar_remain.attr('aria-valuenow', track_remain);
+  $('#label-bar-left').html('<h3>' + elapsed_time + '</h3>');
+  $('#label-bar-right').html('<h3>' + remain_time + '</h3>');
+};
+
 
 // Initialize the Mopidy client after all resources have been loaded.
 $(function() {
@@ -27,21 +97,14 @@ MopidyClient.prototype.init = function() {
   this.connected = false;
   // Use an incrementing integer to uniquely identify JSON RPC calls.
   this.id = 1;
-  // Enable tweaks for mobile devices.
-  this.enable_mobile_tweaks();
+
   // Install global event handlers.
   this.install_event_handlers();
   // Ask the user which Mopidy server to connect to.
   this.select_server();
 };
 
-// MopidyClient.enable_mobile_tweaks() {{{2
 
-MopidyClient.prototype.enable_mobile_tweaks = function() {
-  if (navigator.userAgent.match(/mobile/i)) {
-    $('body').addClass('mobile');
-  }
-};
 
 // MopidyClient.install_event_handlers() {{{2
 
@@ -51,8 +114,8 @@ MopidyClient.prototype.install_event_handlers = function() {
   $('#play-button').click(function() { client.play(); });
   $('#pause-button').click(function() { client.pause(); });
   $('#stop-button').click(function() { client.stop(); });
-  $('#previous-track-button').click(function() { client.previous_track(); });
-  $('#next-track-button').click(function() { client.next_track(); });
+  $('#previous-track-button').click(function() {  mopidy.playback.previous(); });
+  $('#next-track-button').click(function() { mopidy.playback.next(); });
   $('#select-playlist-button').click(function() { client.select_playlist(); });
   $('#cancel-playlist-selection-button').click(function() { client.show_now_playing(); });
 };
@@ -111,30 +174,9 @@ MopidyClient.prototype.connect = function(base_url) {
 
 MopidyClient.prototype.show_now_playing = function() {
   this.show('now-playing');
-  this.refresh_gui();
+  //this.refresh_gui();
 };
 
-// MopidyClient.refresh_gui() - Refresh the GUI. {{{2
-
-var gui_refresh_interval = null;
-
-MopidyClient.prototype.refresh_gui = function() {
-  if (document.location.hash == '#now-playing') {
-    this.call('core.playback.get_current_track', function(current_track) {
-      if (!current_track) {
-        this.logger.info("Nothing is currently playing, starting play list selection ..");
-        this.select_playlist();
-      } else {
-        this.render_current_track(current_track);
-      }
-    });
-  }
-  if (gui_refresh_interval != null)
-    clearTimeout(gui_refresh_interval);
-  gui_refresh_interval = setTimeout(function() {
-    mopidy_client.refresh_gui();
-  }, 1000);
-};
 
 // MopidyClient.select_playlist() - Ask the user which play list to load. {{{2
 
@@ -200,12 +242,7 @@ MopidyClient.prototype.load_playlist = function(name) {
   });
 };
 
-// MopidyClient.render_current_track() - Update the current track info. {{{2
-
-MopidyClient.prototype.render_current_track = function(current_track) {
-  this.logger.info("Rendering track information ..");
-  // Show the now playing interface.
-  this.show('now-playing');
+function render_curent_track(current_track) {
   // Render the "$track from $album by $artist" text.
   var now_playing = [];
   now_playing.push('<h3>Auteur :</h3>')
@@ -252,140 +289,27 @@ MopidyClient.prototype.render_current_track = function(current_track) {
   $('#track-comment').html(now_playing_comment.join('\n'));
 
 
-  this.update_next_prev_tracks();
-  this.update_play_state();
-};
-
-MopidyClient.prototype.update_next_prev_tracks = function () {
-  this.call('core.playback.get_current_tl_track', function(tl_track) {
-      // Update next track
-      this.call({
-        method: 'core.tracklist.next_track',
-        params: [tl_track],
-        done: function(next_track) {
-
-          $('#label-next').html(short_track_info(next_track.track));
-          }
-      });
-      // Update previous track
-      this.call({
-        method: 'core.tracklist.previous_track',
-        params: [tl_track],
-        done: function(prev_track) {
-
-          $('#label-previous').html(short_track_info(prev_track.track));
-        }
-      });
-    });
 };
 
 // short format for trac info
 function short_track_info(track) {
-  var artist = track.artists[0].name;
-  var title = track.name;
-  var year = track.date.slice(0,4);
+  if (track) {
+    var info = '';
+    if (track.artists) {
+        info += track.artists[0].name;
+    };
+    if (track.name) {
+      info += ' ' + track.name;
+    };
+    if (track.date) {
+        info += ' (' + track.date.slice(0,4) + ')';
+    };
+    return info;
+  };
 
-  return artist + ' ' + title + ' ('  +year +')';
 };
 
 
-// MopidyClient.update_play_state() {{{2
-
-MopidyClient.prototype.update_play_state = function() {
-  // Update the pause/resume toggle button.
-  this.call('core.playback.get_state', function(state) {
-    var button = $('#toggle-playback-button');
-    if (state == 'playing') {
-      $('#play-button').hide();
-      $('#pause-button').show();
-      $('#stop-button').show();
-    } else {
-      $('#play-button').show();
-      $('#pause-button').hide();
-      $('#stop-button').hide();
-    }
-  });
-
-
-  // Update the volume level.
-  this.call('core.playback.get_volume', function(volume_level) {
-    var markers = $('#volume-control span');
-    var step_size = 100 / markers.length;
-    for (var i = 0; i < markers.length; i++)
-      if ((i * step_size) <= volume_level)
-        $(markers[i]).addClass('filled');
-      else
-        $(markers[i]).removeClass('filled');
-  });
-
-  // Update the time position.
-  //var length = this.call('core.playback.get_current_track');
-  //console.log(length)
-  this.call('core.playback.get_time_position', function(time_position) {
-    var bar_elapsed = $('#time-elapsed');
-    var bar_remain = $('#time-remain');
-    var track_length = bar_elapsed.attr('aria-valuemax');
-    var track_position = time_position / 1000;
-    var width = ( track_position / track_length) * 100;
-    var track_remain = track_length - track_position;
-
-    var elapsed_time = timeFromSeconds(track_position);
-    var remain_time = timeFromSeconds(track_remain);
-
-
-    bar_elapsed.css('width', width + '%');
-    bar_remain.css('width', (100-width) + '%');
-    bar_elapsed.attr('aria-valuenow', track_position);
-    bar_remain.attr('aria-valuenow', track_remain);
-    $('#label-bar-left').html('<h3>' + elapsed_time + '</h3>');
-    $('#label-bar-right').html('<h3>' + remain_time + '</h3>');
-
-  });
-};
-
-// MopidyClient.play() {{{2
-
-MopidyClient.prototype.play = function() {
-  // this.call('core.playback.resume');
-  this.call('core.playback.play', this.update_play_state);
-};
-
-// MopidyClient.pause() {{{2
-
-MopidyClient.prototype.pause = function() {
-  this.call('core.playback.pause', this.update_play_state);
-};
-
-// MopidyClient.stop() {{{2
-
-MopidyClient.prototype.stop = function() {
-  this.call('core.playback.stop', this.update_play_state);
-};
-
-// MopidyClient.previous_track() {{{2
-
-MopidyClient.prototype.previous_track = function() {
-  this.call('core.playback.previous', function() {
-    this.refresh_gui();
-  });
-};
-
-// MopidyClient.next_track() {{{2
-
-MopidyClient.prototype.next_track = function() {
-  this.call('core.playback.next', function() {
-    this.refresh_gui();
-  });
-};
-
-
-
-// MopidyClient.set_volume() {{{2
-
-MopidyClient.prototype.set_volume = function(volume_level) {
-  this.call({method: 'core.playback.set_volume', params: [volume_level]});
-  this.update_play_state();
-};
 
 // MopidyClient.show() - Bring the given interface to the front. {{{2
 
@@ -509,20 +433,4 @@ function timeFromSeconds(length) {
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
     return ((h > 0 ? h + "h" : "") + (m > 0 ? (h > 0 && m < 10 ? "0" : "") + m + "'" : "0'") + (s < 10 ? "0" : "") + s);
-}
-
-// milliseconds to time in javascript
-function msToTime(s) {
-  var ms = s % 1000;
-  s = (s - ms) / 1000;
-  var secs = s % 60;
-  s = (s - secs) / 60;
-  var mins = s % 60;
-  var hrs = (s - mins) / 60;
-
-  if (hrs) {
-    return hrs + ':' + mins + ':' + secs;
-  } else {
-    return mins + ':' + secs;
-  };
 }

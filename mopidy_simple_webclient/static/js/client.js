@@ -6,7 +6,8 @@
 
 var mopidy = new Mopidy();             // Connect to server
 mopidy.on(console.log.bind(console));  // Log all events
-mopidy.on("state:online", get_current_track);
+//mopidy.on("state:online", get_current_track);
+
 mopidy.on("event:trackPlaybackStarted", function(data) {
   //console.log('data', data);
   update_track_info (data.tl_track);
@@ -28,6 +29,62 @@ mopidy.on("event:playbackStateChanged", function(data) {
 $('#previous-track-button').click(function() {  mopidy.playback.previous(); });
 $('#next-track-button').click(function() { mopidy.playback.next(); });
 
+var get = function (key, object) {
+  console.log('object', object);
+  console.log('key', key)
+    return object[key];
+};
+
+var get_uris_from_playlist = function (playlist) {
+    var uris = [];
+
+    for (var track in playlist['tracks']) {
+      uris.push(playlist['tracks'][track]['uri']);
+    };
+
+    return uris
+};
+
+var add_uris = function (uris) {
+  console.log(mopidy.tracklist.add)
+  return mopidy.tracklist.add(null, null, null, uris);
+}
+
+
+var printTypeAndName = function (model) {
+    console.log(model.__model__ + ": " + model.name);
+    // By returning the playlist, this function can be inserted
+    // anywhere a model with a name is piped in the chain.
+    return model;
+};
+
+var queueAndPlay = function (playlistNum, trackNum) {
+    playlistNum = playlistNum || 0;
+    trackNum = trackNum || 0;
+    mopidy.playlists.getPlaylists()
+        // => list of Playlists
+        .fold(get, playlistNum)
+        // => Playlist
+        //.then(printTypeAndName)
+        // => Playlist
+        //.fold(get, 'tracks')
+        .then(get_uris_from_playlist)
+        //.then(printTypeAndName)
+        // => list of Tracks
+        .then(add_uris)
+        // => list of TlTracks
+        .fold(get, trackNum)
+        // => TlTrack
+        .then(mopidy.playback.play)
+        // => null
+        //.then(printNowPlaying)
+        // => null
+        .catch(console.error.bind(console))  // Handle errors here
+        // => null
+        .done();                       // ...or they'll be thrown here
+};
+
+mopidy.on("state:online", queueAndPlay);
 
 
 function get_current_track() {

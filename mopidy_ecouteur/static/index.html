@@ -1,0 +1,115 @@
+<!--
+
+ Simple Mopidy web client.
+
+ Author: Peter Odding <peter@peterodding.com>
+ Last Change: October 19, 2014
+ URL: https://github.com/xolox/mopidy-simple-webclient
+
+-->
+<!doctype html>
+<html lang="fr"> <!-- ng-app="ecouteurApp"-->
+  <head>
+    <title>Music player</title>
+    <meta charset="utf-8">
+    <!-- JQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <!-- Angular -->
+    <!--script src="bower_components/angular/angular.js"></script-->
+    <!-- Font Awesome" -->
+    <link rel="stylesheet" href="styles/font-awesome.min.css" />
+    <script type="text/javascript" src="../mopidy/mopidy.min.js"></script>
+    <!-- The Mopidy client behavior and styling. -->
+    <link href="styles/client.css" rel="stylesheet">
+    <script src="js/client.js"></script>
+    <script src="js/sprintf.js"></script>
+    <!--script src="js/controllers.js"></script-->
+  </head>
+  <!--body ng-controller="MopidyCtrl"-->
+  <body>
+    <!-- Play list selection interface. -->
+    <div id="select-playlist" class="hidden-by-default dialog">
+      <p>Select a playlist below to start playing the tracks in that playlist.
+         Alternatively you can <a href="#" id="cancel-playlist-selection-button">return
+         without selecting a playlist</a>.</p>
+      <p id="loading-playlists-spinner"><img src="images/spinner.gif" class="spinner"></p>
+      <p id="available-playlists"></p>
+      <div id="no-playlists-message" class="error-message hidden-by-default">
+        <p><strong>You don't have any playlists!</strong></p>
+        <p>That's a bit of a problem because this Mopidy client expects to get
+           started by loading a playlist into the play queue!</p>
+        <p>Please use another Mopidy client to create a playlist or create a
+           playlist in Spotify (and make sure the Spotify plug-in for Mopidy is
+           enabled).</p>
+      </div>
+    </div>
+    <!-- Now playing interface. -->
+    <div id="now-playing" class="hidden-by-default">
+      <div class="container" style="background-color: #000000; color: #49A116;">
+        <h1> L’ÉCOUTEUR </h1>
+        <div class="row">
+          <div class="col-md-7 block green-bg">
+            <div id="track-info">{{track.title}}</div>
+          </div>
+          <div class="col-md-5 block green-bg">
+            <div id="track-extra-info"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="progress" style="height: 100px; background-color: black">
+                <div id="time-elapsed" class="progress-bar block green-bg"
+                     role="progressbar" aria-valuenow="0"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 0%; text-align: left;">
+                     <div id="label-bar-left">
+                     </div>
+                </div>
+                <div id="time-remain" class="progress-bar block blue-bg"
+                     role="progressbar" aria-valuenow="100"
+                     aria-valuemin="0" aria-valuemax="100" style="width: 100%; text-align: right;">
+                     <div id="label-bar-right">
+                     </div>
+                 </div>
+            </div>
+       </div>
+      <div class="row">
+        <div class="col-md-12 blue-bg block">
+          <div id="track-comment"></div>
+        </div>
+      </div>
+<div class="row">
+  <div class="col-md-12 blue-bg block">
+  <div class="row">
+        <div id="previous-track-button" class="col-md-6 dimmed-image-button hover-image-button">
+           <i class="fa fa-caret-left fa-2x" style="vertical-align: middle;"></i>
+           <span id="label-previous"></span>
+       </div>
+       <div id="next-track-button" class="col-md-6 dimmed-image-button hover-image-button">
+           <span id="label-next"></span>
+           <i class="fa fa-caret-right fa-2x" style="vertical-align: middle;"></i>
+       </div>
+   </div>
+</div>
+</div>
+
+
+      <div id="controls">
+<!--        <p id="playback-controls">
+          <img src="images/previous.png" id="previous-track-button" class="dimmed-image-button hover-image-button">
+          <img src="images/play.png" id="play-button" class="dimmed-image-button hover-image-button">
+          <img src="images/pause.png" id="pause-button" class="dimmed-image-button hover-image-button">
+          <img src="images/stop.png" id="stop-button" class="dimmed-image-button hover-image-button">
+          <img src="images/next.png" id="next-track-button" class="dimmed-image-button hover-image-button">
+        </p>
+      -->
+        <p id="misc-controls">
+          <button class="btn" id="select-playlist-button">
+            <img src="images/eject.png">
+          </button>
+        </p>
+      </div>
+    </div>
+    <p id="runtime-error" class="error-message hidden-by-default"></p>
+  </body>
+</html>

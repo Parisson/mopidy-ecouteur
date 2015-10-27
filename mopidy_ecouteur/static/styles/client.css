@@ -6,13 +6,40 @@
  */
 
 /* Global styles. {{{1 */
+@font-face{
+    font-family : "Avenir Black";
+    src : url('Avenir-Black.ttf');
+}
+
+@font-face{
+    font-family : "Avenir Roman";
+    src : url(' Avenir-Roman.ttf');
+}
 
 body {
-  margin: 1em;
+  margin: 2em;
   font-size: 2em;
   line-height: 1.75em;
   color: black;
-  background: white;
+  background: #333333;
+  font-family: 'Avenir Roman', sans-serif;
+}
+
+
+.row {
+    margin: 4px;
+}
+
+h1 {
+    font-size: 250%;
+    font-weight: bold;
+    font-family: 'Avenir Black', sans-serif;
+    padding-left: 5px;
+}
+
+
+h2 {
+    margin-top: 0px;
 }
 
 .spinner {
@@ -55,13 +82,48 @@ body {
   border-radius: 0.25em;
 }
 
+.green-bg {
+  background-color: #49A116 !important;
+  color: white !important;
+}
+
+.blue-bg {
+  background-color: #A3CFE6 !important;
+  color: #333333 !important;
+}
+
+.block {
+  border-radius: 2mm;
+  border-style: solid;
+  border-color: black;
+  border-width: 1mm;
+}
+
+.progress-bar {
+    min-width: 8%;
+    max-width: 92%;
+    /*margin-right: 1mm;
+    margin-left: 1mm;*/
+}
+
+#label-bar-left {
+    text-align: left;
+    margin-left: 3mm;
+  }
+
+#label-bar-right {
+      text-align: right;
+      margin-right: 3mm;
+    }
+
 /* Now playing interface. {{{1 */
 
 #now-playing {
-  text-align: center;
+  text-align: left;
 }
 
 /* Track metadata. {{{2 */
+
 
 #now-playing a:link,
 #now-playing a:visited {
@@ -75,13 +137,25 @@ body {
 }
 
 #now-playing .track-name {
-  font-size: 1.3em;
+  font-size: 2em;
   font-weight: bold;
+  font-family: 'Avenir Black', sans-serif;
 }
 
-#now-playing .album-name,
+#now-playing .trck-comment {
+  padding-top: 0.5em;
+  line-height: 1.2em;
+  font-size: 1.1em;
+}
+
+#now-playing .album-name {
+    line-height: 1.1em;
+}
+
 #now-playing .artist-name {
-  font-size: 1.2em;
+  font-size: 2em;
+  font-weight: bold;
+  font-family: 'Avenir Black', sans-serif;
 }
 
 #now-playing .from-album,
@@ -106,15 +180,23 @@ body {
   height: 2em;
 }
 
+#previous-track-button {
+  text-align: left;
+}
+
+#next-track-button {
+  text-align: right;
+}
+
 .dimmed-image-button {
-  opacity: 0.5;
+  color: #333333;
 }
 
 .hover-image-button:hover {
-  opacity: 1;
+  color: white;
 }
 
-#playback-controls, #volume-control, #misc-controls {
+#playback-controls, #misc-controls {
   margin: 1em auto;
 }
 
@@ -122,25 +204,7 @@ body {
   margin: 0.25em;
 }
 
-/* Volume control. {{{2 */
 
-#volume-control {
-  width: 16em;
-}
-
-#volume-control .step {
-  display: block;
-  margin: 0.3em;
-  width: 2em;
-  height: 2em;
-  float: left;
-  background-color: #eee;
-  border-radius: 1em;
-}
-
-#volume-control .filled {
-  background-color: LightSteelBlue;
-}
 
 /* Mobile tweaks. {{{1 */
 

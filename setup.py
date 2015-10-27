@@ -23,13 +23,13 @@ def get_version(filename):
     return metadata['version']
 
 setuptools.setup(
-    name='Mopidy-Simple-Webclient',
-    version=get_version('mopidy_simple_webclient/__init__.py'),
-    description="Very simple and mobile friendly web interface for the Mopidy music server",
+    name='Mopidy-Ecouteur',
+    version=get_version('mopidy_ecouteur/__init__.py'),
+    description="Very simple web interface for the Mopidy music server designed for the Ecouteur project",
     long_description=get_contents('README.rst'),
-    url='https://github.com/xolox/mopidy-simple-webclient',
-    author='Peter Odding',
-    author_email='peter@peterodding.com',
+    url='https://github.com/parisson/mopidy-ecouteur',
+    author='Thomas Fillon',
+    author_email='thomas@parisson.com',
     packages=setuptools.find_packages(),
     zip_safe=False,
     include_package_data=True,
@@ -39,7 +39,7 @@ setuptools.setup(
     ],
     entry_points={
         'mopidy.ext': [
-            'simple-webclient = mopidy_simple_webclient:Extension',
+            'ecouteur = mopidy_ecouteur:Extension',
         ],
     },
     classifiers=[

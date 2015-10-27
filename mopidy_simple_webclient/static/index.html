@@ -29,15 +29,6 @@
   </head>
   <!--body ng-controller="MopidyCtrl"-->
   <body>
-    <!-- Server selection interface. -->
-    <div id="select-server" class="hidden-by-default dialog">
-      <p>To get started please enter the address of your <a href="https://www.mopidy.com/">Mopidy server</a> below and click on the connect button. The default should be fine in most circumstances.</p>
-      <form action="" method="post">
-        <p><label>Server URL: <input type="text" id="server-url" value=""></label></p>
-        <p><button class="btn btn-primary" id="connect">Connect to server ..</button></p>
-        <p id="connect-error"></p>
-      </form>
-    </div>
     <!-- Play list selection interface. -->
     <div id="select-playlist" class="hidden-by-default dialog">
       <p>Select a playlist below to start playing the tracks in that playlist.
@@ -113,9 +104,8 @@
         </p>
       -->
         <p id="misc-controls">
-          <button class="btn btn-large" id="select-playlist-button">
+          <button class="btn" id="select-playlist-button">
             <img src="images/eject.png">
-            Select playlist ..
           </button>
         </p>
       </div>

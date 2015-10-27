@@ -18,3 +18,4 @@ Mopidy-Ecouteur start as a fork of `Mopidy Simple Webclient`_ but we have rewrit
 .. _Raspberry Pi: http://en.wikipedia.org/wiki/Raspberry_Pi
 .. _Mopidy Simple Webclient: https://github.com/xolox/mopidy-simple-webclient
 .. _JSON-RPC API: https://docs.mopidy.com/en/latest/api/http/#http-api
+.. _headless: http://en.wikipedia.org/wiki/Headless_software

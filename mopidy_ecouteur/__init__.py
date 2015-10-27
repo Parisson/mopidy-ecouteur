@@ -12,7 +12,7 @@ __version__ = '0.1.1'
 
 class Extension(mopidy.ext.Extension):
 
-    ext_name = 'simple-webclient'
+    ext_name = 'ecouteur'
     version = __version__
 
     def get_default_config(self):

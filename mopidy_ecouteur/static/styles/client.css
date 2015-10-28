@@ -18,7 +18,7 @@
 
 body {
   margin: 2em;
-  font-size: 2em;
+  font-size: 1.6em;
   line-height: 1.75em;
   color: black;
   background: #333333;
@@ -27,7 +27,7 @@ body {
 
 
 .row {
-    margin: 4px;
+    margin: 0px 4px 0px 4px;
 }
 
 h1 {
@@ -93,17 +93,25 @@ h2 {
 }
 
 .block {
-  border-radius: 2mm;
+  border-radius: 8px;
   border-style: solid;
   border-color: black;
-  border-width: 1mm;
+  border-width: 5px;
 }
 
+.progress {
+    position: relative;
+    height: 100px;
+    margin-bottom: 0;
+    background-color: black;
+}
 .progress-bar {
     min-width: 8%;
     max-width: 92%;
+    font-size: 1em;
     /*margin-right: 1mm;
     margin-left: 1mm;*/
+    height: 100px;
 }
 
 #label-bar-left {
@@ -182,10 +190,12 @@ h2 {
 
 #previous-track-button {
   text-align: left;
+  padding-left: 0em;
 }
 
 #next-track-button {
   text-align: right;
+  padding-right: 0em;
 }
 
 .dimmed-image-button {
@@ -222,4 +232,19 @@ body.mobile button {
   font-size: 1em;
   line-height: 1.5em;
   text-align: center;
+}
+
+#main-info {
+    padding-left: 1em;
+    width:50%;
+    float: left;
+}
+
+#extra-info {
+    font-size: 1.2em;
+    padding: 0.5em 1em 0.5em 1em;
+    width:50%;
+    float: right;
+    height: 195px;
+    margin-top: 70px;
 }

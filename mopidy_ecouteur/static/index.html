@@ -19,7 +19,7 @@
     <!-- Angular -->
     <!--script src="bower_components/angular/angular.js"></script-->
     <!-- Font Awesome" -->
-    <link rel="stylesheet" href="styles/font-awesome.min.css" />
+    <link rel="stylesheet" href="styles/font-awesome.css" />
     <script type="text/javascript" src="../mopidy/mopidy.min.js"></script>
     <!-- The Mopidy client behavior and styling. -->
     <link href="styles/client.css" rel="stylesheet">
@@ -50,15 +50,15 @@
       <div class="container" style="background-color: #000000; color: #49A116;">
         <h1> L’ÉCOUTEUR </h1>
         <div class="row">
-          <div class="col-md-7 block green-bg">
+          <div class="block green-bg" id="main-info">
             <div id="track-info">{{track.title}}</div>
           </div>
-          <div class="col-md-5 block green-bg">
+          <div class="block green-bg" id="extra-info">
             <div id="track-extra-info"></div>
-            </div>
+          </div>
         </div>
         <div class="row">
-            <div class="progress" style="height: 100px; background-color: black">
+           <div class="progress">
                 <div id="time-elapsed" class="progress-bar block green-bg"
                      role="progressbar" aria-valuenow="0"
                      aria-valuemin="0" aria-valuemax="100" style="width: 0%; text-align: left;">

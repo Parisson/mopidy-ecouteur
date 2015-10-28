@@ -166,7 +166,7 @@ h2 {
 #now-playing .trck-comment {
   padding-top: 0.5em;
   line-height: 1.2em;
-  font-size: 2em;
+  font-size: 1.5em;
 }
 
 #now-playing .album-name {
@@ -258,6 +258,7 @@ body.mobile button {
 #extra-info {
     font-size: 1.2em;
     max-height: 265px;
+    padding-top: 0.5em;
 }
 
 #track-comment {

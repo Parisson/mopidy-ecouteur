@@ -152,7 +152,7 @@ function set_time_position(time_position) {
   bar_elapsed.attr('aria-valuenow', track_position);
   bar_remain.attr('aria-valuenow', track_remain);
   $('#label-bar-left').html('<h3>' + elapsed_time + '</h3>');
-  $('#label-bar-right').html('<h3>' + remain_time + '</h3>');
+  $('#label-bar-right').html('<h3> -' + remain_time + '</h3>');
 };
 
 function select_playlist() {

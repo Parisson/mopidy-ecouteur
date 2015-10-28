@@ -112,8 +112,8 @@ h2 {
     background-color: black;
 }
 .progress-bar {
-    min-width: 8%;
-    max-width: 92%;
+    min-width: 12%;
+    max-width: 88%;
     font-size: 1em;
     /*margin-right: 1mm;
     margin-left: 1mm;*/

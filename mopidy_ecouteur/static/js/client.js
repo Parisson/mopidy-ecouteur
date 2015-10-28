@@ -107,10 +107,11 @@ function get_current_track() {
 };
 
 function update_track_info (tl_track) {
-  render_curent_track(tl_track.track);
-  mopidy.tracklist.nextTrack(tl_track).then(set_next_track);
-  mopidy.tracklist.previousTrack(tl_track).then(set_previous_track);
-  //getTimePosition();
+  if (tl_track !== null) {
+    render_curent_track(tl_track.track);
+    mopidy.tracklist.nextTrack(tl_track).then(set_next_track);
+    mopidy.tracklist.previousTrack(tl_track).then(set_previous_track);
+  };
 };
 
 function set_next_track(next_track) {

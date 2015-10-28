@@ -31,18 +31,12 @@
   <body>
     <!-- Play list selection interface. -->
     <div id="select-playlist" class="hidden-by-default dialog">
-      <p>Select a playlist below to start playing the tracks in that playlist.
-         Alternatively you can <a href="#" id="cancel-playlist-selection-button">return
-         without selecting a playlist</a>.</p>
+      <p>Veuillez sélectionner une liste de lecture ci dessous.</p>
       <p id="loading-playlists-spinner"><img src="images/spinner.gif" class="spinner"></p>
       <p id="available-playlists"></p>
       <div id="no-playlists-message" class="error-message hidden-by-default">
-        <p><strong>You don't have any playlists!</strong></p>
-        <p>That's a bit of a problem because this Mopidy client expects to get
-           started by loading a playlist into the play queue!</p>
-        <p>Please use another Mopidy client to create a playlist or create a
-           playlist in Spotify (and make sure the Spotify plug-in for Mopidy is
-           enabled).</p>
+        <p><strong>Aucune liste de lecture !</strong></p>
+        <p>Veuillez utiliser un autre client Mopidy pour créer une liste de lecture.</p>
       </div>
     </div>
     <!-- Now playing interface. -->
@@ -51,7 +45,7 @@
         <h1>&nbsp;L’ÉCOUTEUR</h1>
         <div class="row">
           <div class="block green-bg" id="main-info">
-            <div id="track-info">{{track.title}}</div>
+            <div id="track-info"></div>
           </div>
           <div class="block green-bg" id="extra-info">
             <div id="track-extra-info"></div>
@@ -93,23 +87,14 @@
 </div>
 </div>
 
-
-      <div id="controls">
-<!--        <p id="playback-controls">
-          <img src="images/previous.png" id="previous-track-button" class="dimmed-image-button hover-image-button">
-          <img src="images/play.png" id="play-button" class="dimmed-image-button hover-image-button">
-          <img src="images/pause.png" id="pause-button" class="dimmed-image-button hover-image-button">
-          <img src="images/stop.png" id="stop-button" class="dimmed-image-button hover-image-button">
-          <img src="images/next.png" id="next-track-button" class="dimmed-image-button hover-image-button">
-        </p>
-      -->
-        <p id="misc-controls">
-          <button class="btn" id="select-playlist-button">
-            <img src="images/eject.png">
-          </button>
-        </p>
-      </div>
-    </div>
-    <p id="runtime-error" class="error-message hidden-by-default"></p>
-  </body>
+</div>
+<div id="controls">
+    <p id="misc-controls">
+      <button class="btn hover-image-button" id="select-playlist-button">
+          <i class="fa fa-eject fa-2x" style="vertical-align: middle;"></i>
+      </button>
+    </p>
+</div>
+</div>
+</body>
 </html>

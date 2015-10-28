@@ -40,7 +40,7 @@ h1 {
     font-size: 250%;
     font-weight: bold;
     font-family: 'Avenir Black', sans-serif;
-    padding-left: 5px;
+    padding-left: 15px;
 }
 
 
@@ -63,7 +63,7 @@ h2 {
   margin: 0 auto;
   min-width: 60%;
   max-width: 25em;
-  text-align: justify;
+  text-align: center;
 }
 
 /* Server selection interface. {{{1 */
@@ -218,9 +218,13 @@ h2 {
 
 #misc-controls button {
   margin: 0.25em;
+  background: #333333;
+  color: #222222;
 }
 
-
+#misc-controls button:hover {
+  color: white;
+}
 
 /* Mobile tweaks. {{{1 */
 

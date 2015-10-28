@@ -172,7 +172,7 @@ function select_playlist() {
       if (name == 'Starred')
         classes += ' btn-primary';
       var onclick = sprintf('load_playlist(%s)', i);
-      labels.push(sprintf('<button class="%s" onclick="%s">%s (%i tracks)</button>',
+      labels.push(sprintf('<button class="%s" onclick="%s">%s (%i pistes)</button>',
                           classes, html_encode(onclick), html_encode(name), size));
     }
     if (labels.length > 0) {

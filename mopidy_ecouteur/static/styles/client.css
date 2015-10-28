@@ -40,7 +40,7 @@ h1 {
     font-size: 250%;
     font-weight: bold;
     font-family: 'Avenir Black', sans-serif;
-    padding-left: 15px;
+    padding-left: 25px;
 }
 
 
@@ -251,13 +251,15 @@ body.mobile button {
   text-align: center;
 }
 
-/*#main-info {
-    padding-left: 1em;
-    width:50%;
-    float: left;
-    height: 265px;
-}*/
+#main-info {
+      height: 265px;
+}
 
 #extra-info {
     font-size: 1.2em;
+    max-height: 265px;
+}
+
+#track-comment {
+  height: 428px;
 }

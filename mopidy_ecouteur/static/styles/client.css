@@ -25,6 +25,12 @@ body {
   font-family: 'Avenir Roman', sans-serif;
 }
 
+.container {
+    background-color: #000000;
+    color: #49A116;
+    padding-left: 0;
+    padding-right: 0;
+}
 
 .row {
     margin: 0px 4px 0px 4px;
@@ -238,6 +244,7 @@ body.mobile button {
     padding-left: 1em;
     width:50%;
     float: left;
+    height: 265px;
 }
 
 #extra-info {

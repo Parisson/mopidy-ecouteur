@@ -105,12 +105,19 @@ h2 {
   border-width: 5px;
 }
 
+.pull-bottom {
+    display: inline-block;
+    vertical-align: bottom;
+    float: none;
+}
+
 .progress {
     position: relative;
     height: 100px;
     margin-bottom: 0;
     background-color: black;
 }
+
 .progress-bar {
     min-width: 12%;
     max-width: 88%;
@@ -244,18 +251,13 @@ body.mobile button {
   text-align: center;
 }
 
-#main-info {
+/*#main-info {
     padding-left: 1em;
     width:50%;
     float: left;
     height: 265px;
-}
+}*/
 
 #extra-info {
     font-size: 1.2em;
-    padding: 0.5em 1em 0.5em 1em;
-    width:50%;
-    float: right;
-    height: 195px;
-    margin-top: 70px;
 }

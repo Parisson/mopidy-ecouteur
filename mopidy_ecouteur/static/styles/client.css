@@ -17,17 +17,23 @@
 }
 
 body {
-  margin: 2em;
-  font-size: 1.6em;
+  /* margin: 2em; */
+  font-size: 2.2em;
   line-height: 1.75em;
-  color: #49A116;
+  color: #009900;
   background: #000000;
   font-family: 'Avenir Roman', sans-serif;
+  
 }
 
 .container {
     background-color: #000000;
-    color: #49A116;
+    color: #009900;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.container-fluid {
     padding-left: 0;
     padding-right: 0;
 }
@@ -46,6 +52,10 @@ h1 {
 
 h2 {
     margin-top: 0px;
+}
+
+h3 {
+    font-size: 1.5em;
 }
 
 .spinner {
@@ -89,7 +99,8 @@ h2 {
 }
 
 .green-bg {
-  background-color: #49A116 !important;
+  /* background-color: #49A116 !important; */
+  background-color: #009900 !important;
   color: white !important;
 }
 
@@ -121,21 +132,31 @@ h2 {
 .progress-bar {
     min-width: 12%;
     max-width: 88%;
-    font-size: 1em;
+    font-size: 1.1em;
     /*margin-right: 1mm;
     margin-left: 1mm;*/
     /*height: 160px;*/
 }
 
 #label-bar-left {
+    font-size: 1.1em;
     text-align: left;
     margin-left: 3mm;
   }
 
 #label-bar-right {
+      font-size: 1.1em;
       text-align: right;
       margin-right: 3mm;
     }
+
+#label-previous {
+  font-size: 1.4em;
+}
+
+#label-next {
+  font-size: 1.4em;
+}
 
 /* Now playing interface. {{{1 */
 
@@ -158,7 +179,7 @@ h2 {
 }
 
 #now-playing .track-name {
-  font-size: 2em;
+  font-size: 250%;
   font-weight: bold;
   font-family: 'Avenir Black', sans-serif;
 }
@@ -174,7 +195,7 @@ h2 {
 }
 
 #now-playing .artist-name {
-  font-size: 2em;
+  font-size: 250%;
   font-weight: bold;
   font-family: 'Avenir Black', sans-serif;
 }
@@ -252,15 +273,16 @@ body.mobile button {
 }
 
 #main-info {
-      height: 265px;
+      height: 385px;
 }
 
 #extra-info {
-    font-size: 1.2em;
-    max-height: 265px;
+    font-size: 1.4em;
+    max-height: 305px;
     padding-top: 0.5em;
+    padding-bottom: 0.5em;
 }
 
 #track-comment {
-  height: 428px;
+  height: 658px;
 }

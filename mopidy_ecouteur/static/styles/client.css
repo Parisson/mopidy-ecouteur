@@ -47,6 +47,7 @@ h1 {
     font-weight: bold;
     font-family: 'Avenir Black', sans-serif;
     padding-left: 25px;
+    color: white;
 }
 
 
@@ -110,10 +111,10 @@ h3 {
 }
 
 .block {
-  border-radius: 8px;
+  border-radius: 16px;
   border-style: solid;
   border-color: black;
-  border-width: 5px;
+  border-width: 8px;
 }
 
 .pull-bottom {

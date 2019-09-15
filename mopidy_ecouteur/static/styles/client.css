@@ -23,7 +23,7 @@ body {
   color: #009900;
   background: #000000;
   font-family: 'Avenir Roman', sans-serif;
-  
+
 }
 
 .container {
@@ -225,12 +225,20 @@ h3 {
 
 #previous-track-button {
   text-align: left;
-  padding-left: 0em;
+  padding-left: 2em;
 }
 
 #next-track-button {
   text-align: right;
   padding-right: 0em;
+}
+
+.ellipsis {
+  padding-top: 0.5em;
+  width: 40%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dimmed-image-button {

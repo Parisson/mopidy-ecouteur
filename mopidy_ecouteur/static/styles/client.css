@@ -18,7 +18,7 @@
 
 body {
   /* margin: 2em; */
-  font-size: 2.2em;
+  /* font-size: 2em; */
   line-height: 1.75em;
   color: #009900;
   background: #000000;
@@ -125,7 +125,7 @@ h3 {
 
 .progress {
     position: relative;
-    height: 160px;
+    height: 80px;
     margin-bottom: 0;
     background-color: black;
 }
@@ -153,10 +153,12 @@ h3 {
 
 #label-previous {
   font-size: 1.4em;
+  width: 20%;
 }
 
 #label-next {
   font-size: 1.4em;
+  width: 20%;
 }
 
 /* Now playing interface. {{{1 */
@@ -180,7 +182,7 @@ h3 {
 }
 
 #now-playing .track-name {
-  font-size: 250%;
+  font-size: 200%;
   font-weight: bold;
   font-family: 'Avenir Black', sans-serif;
 }
@@ -225,7 +227,7 @@ h3 {
 
 #previous-track-button {
   text-align: left;
-  padding-left: 2em;
+  padding-left: 0em;
 }
 
 #next-track-button {
@@ -234,7 +236,7 @@ h3 {
 }
 
 .ellipsis {
-  padding-top: 0.5em;
+  padding-top: 1.5em;
   width: 40%;
   white-space: nowrap;
   overflow: hidden;
@@ -282,7 +284,7 @@ body.mobile button {
 }
 
 #main-info {
-      height: 385px;
+      height: 320px;
 }
 
 #extra-info {
@@ -293,5 +295,5 @@ body.mobile button {
 }
 
 #track-comment {
-  height: 658px;
+  height: 300px;
 }

@@ -153,12 +153,10 @@ h3 {
 
 #label-previous {
   font-size: 1.4em;
-  width: 20%;
 }
 
 #label-next {
   font-size: 1.4em;
-  width: 20%;
 }
 
 /* Now playing interface. {{{1 */
@@ -182,7 +180,7 @@ h3 {
 }
 
 #now-playing .track-name {
-  font-size: 200%;
+  font-size: 250%;
   font-weight: bold;
   font-family: 'Avenir Black', sans-serif;
 }
@@ -190,7 +188,7 @@ h3 {
 #now-playing .trck-comment {
   padding-top: 0.5em;
   line-height: 1.2em;
-  font-size: 1.5em;
+  font-size: 1.7em;
 }
 
 #now-playing .album-name {
@@ -288,12 +286,12 @@ body.mobile button {
 }
 
 #extra-info {
-    font-size: 1.4em;
+    font-size: 1.6em;
     max-height: 305px;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
 
 #track-comment {
-  height: 300px;
+  height: 430px;
 }
